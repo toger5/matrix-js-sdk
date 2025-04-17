@@ -213,6 +213,7 @@ export class MatrixRTCSession extends TypedEventEmitter<
     public static callMembershipsForRoom(
         room: Pick<Room, "getLiveTimeline" | "roomId" | "hasMembershipState">,
     ): CallMembership[] {
+        // This needs to not only be "per room" but also per application
         const logger = rootLogger.getChild(`[MatrixRTCSession ${room.roomId}]`);
         const roomState = room.getLiveTimeline().getState(EventTimeline.FORWARDS);
         if (!roomState) {
@@ -280,6 +281,7 @@ export class MatrixRTCSession extends TypedEventEmitter<
      * Return the MatrixRTC session for the room, whether there are currently active members or not
      */
     public static roomSessionForRoom(client: MatrixClient, room: Room): MatrixRTCSession {
+        // needs to be per application
         const callMemberships = MatrixRTCSession.callMembershipsForRoom(room);
 
         return new MatrixRTCSession(client, room, callMemberships);
@@ -327,6 +329,7 @@ export class MatrixRTCSession extends TypedEventEmitter<
             "getLiveTimeline" | "roomId" | "getVersion" | "hasMembershipState" | "on" | "off"
         >,
         public memberships: CallMembership[],
+        // needs to now what application this session is.
     ) {
         super();
         this.logger = rootLogger.getChild(`[MatrixRTCSession ${roomSubset.roomId}]`);
@@ -563,6 +566,7 @@ export class MatrixRTCSession extends TypedEventEmitter<
      */
     private recalculateSessionMembers = (): void => {
         const oldMemberships = this.memberships;
+        // the session needs to know about its appilcation to use it here
         this.memberships = MatrixRTCSession.callMembershipsForRoom(this.room);
 
         this._callId = this._callId ?? this.memberships[0]?.callId;

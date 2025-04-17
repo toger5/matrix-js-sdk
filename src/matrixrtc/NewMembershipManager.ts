@@ -650,6 +650,7 @@ export class MembershipManager
     }
 
     // HELPERS
+    // state key needs to be created with an additional application
     private makeMembershipStateKey(localUserId: string, localDeviceId: string): string {
         const stateKey = `${localUserId}_${localDeviceId}`;
         if (/^org\.matrix\.msc(3757|3779)\b/.exec(this.room.getVersion())) {

@@ -48,6 +48,7 @@ export class MatrixRTCSessionManager extends TypedEventEmitter<MatrixRTCSessionM
     // is only ever one single room session object for any given room for the lifetime of the
     // client: that way there can never be any code holding onto a stale object that is no
     // longer the correct session object for the room.
+    // This map needs to be per room per application
     private roomSessions = new Map<string, MatrixRTCSession>();
 
     public constructor(private client: MatrixClient) {
