@@ -1,15 +1,19 @@
-
+# Meeting Notes: BigBlueButton and Neoboard + MatrixRTC
+Links:
+ - implementation notes: https://github.com/toger5/matrix-js-sdk/commit/b261a3f9324afa6547423ebd38912086ad1b0c3e
+ - MSC: https://github.com/matrix-org/matrix-spec-proposals/blob/toger5/matrixRTC/proposals/4143-matrix-rtc.md
+ 
 - **Actionable implementation** support multiple rtc sessions (of different type) per room (js-sdk matrixRTCSessionManager.ts)
     - Update the rust and js-sdk implementation to conform to the state key format from the spec (`user_device_app`) (not it is `user_device`)
     - livekit/room identity needs to be adjusted.
-- decide if BBB is of type `m.call` or `org.bigbluebutton.call` (or `session`)
-    - `m.call` -> interop with ec
-    - `org.bigbluebutton.call` parallel call and BigBlueButton sessions are possible, we dont need to add encryption to BigBlueButton
+- **Solved** decide if BBB is of type `m.call` or `org.bigbluebutton.call` (or `session`)
+    - `m.call` -> interop with ec **potential future step**
+    - `org.bigbluebutton.call` parallel call and BigBlueButton sessions are possible, we dont need to add encryption to BigBlueButton **Start with this**
 
-- How does the join/creation flow look like (in EW)
- - This is for the future
- - Focus on making things general purpose to have good maintainablility.
- - EW should support general purpose rtc session in a general smart way and not have too many custom rules.
+- **Follow up topic** How does the join/creation flow look like (in EW)
+  - This is for the future
+  - Focus on making things general purpose to have good maintainablility.
+  - EW should support general purpose rtc session in a general smart way and not have too many custom rules.
 
 - **Actionable Spec Comment** EW needs to support detecting and displaying different rtc session and a way to allow joining them
     - Where do we store what widget needs to be used for which rtc session type.
